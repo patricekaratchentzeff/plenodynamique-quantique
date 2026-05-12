@@ -1,0 +1,266 @@
+
+% définir le français comme langue
+%\usepackage[french]{babel}\frenchsetup{og=«, fg=»}
+\usepackage[autolanguage]{numprint} % for the \nombre command
+% pour signaler les erreurs de typo
+%\usepackage[All]{lua-typo}
+%Hyphenation rules
+\usepackage{hyphenat}
+
+\usepackage{tikz,fontspec}
+\usepackage{tikz-3dplot}
+
+% fonte pour LuaLaTeX
+\usepackage{fontspec}
+
+% ajout des chiffres oldstyle
+%\addfontfeature{Numbers={OldStyle,Proportional}}
+% pour les formules mathématiques
+\usepackage{unicode-math}
+\usepackage{amsmath}
+%\setmathfont{STIX Two Math}
+%\setmainfont{STIX Two Math}
+%\usepackage{fancyhdr} 
+
+\usepackage{multicol}
+
+% color
+\usepackage{xcolor}
+\definecolor{pkcolor}{rgb}{0.0, 0.2, 0.4}  % Blue
+
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{indentfirst}
+\usepackage{tabularray}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage[version=4]{mhchem}
+%\usepackage{footnotehyper}
+\usepackage{bm}
+\usepackage[colorlinks]{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+	citecolor=violet,
+	pdftitle={},
+	pdfpagemode=FullScreen,
+}
+\usepackage{afterpage}
+
+
+% shortcuts
+\newcommand{\PQ}{plénodynamique quantique}
+\newcommand{\MQ}{mécanique quantique}
+\usepackage{xfrac}
+%\usepackage{units}
+% belles fractions
+\newcommand{\R}[2]{\sfrac{#1}{#2}}
+\newcommand{\Rv}[4]{\raisebox{0.3ex}{${\scriptscriptstyle #1}$}$\frac{#2}{#3}#4$}
+\newcommand{\Ru}[4]{\raisebox{0.7ex}{${\scriptscriptstyle #1}$}$\sfrac{#2}{#3}#4$}
+
+
+% headers
+\usepackage{fancyhdr}
+
+% Redéfinition du style du numéro de page pour les headers
+\newcommand{\thepagefhf}{%
+	\begingroup
+	\setlength{\fboxsep}{3pt} % Espace entre le chiffre et le bord du carré
+	\colorbox{pkcolor}{\color{white}\sffamily\small\bfseries\arabic{page}}%
+	\endgroup
+}
+
+\newcommand{\titlehead}{
+	\color{pkcolor}\sffamily\small\bfseries{Plénodynamique quantique}
+}
+
+% Redéfinition du style 'plain' (utilisé sur la 1ère page) pour qu'il soit vide
+\fancypagestyle{plain}{
+	\fancyhf{} % Supprime tout (en-tête et pied de page)
+	\renewcommand{\headrulewidth}{0pt} % Enlève la ligne si présente
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RO,LE]{\titlehead}
+\fancyhead[LO,RE]{\thepagefhf}
+% enlève le pied de page
+\cfoot{}
+% trait horizontale
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{pkcolor}\leaders\hrule height \headrulewidth\hfill}}
+
+
+
+% Title and subtitle
+\newcommand{\titlefont}{\bfseries\color{pkcolor}\fontsize{20}{24}\sffamily\selectfont}
+
+
+% Redefine headers title
+\makeatletter
+
+\newcommand{\@subtitle}{}
+\newcommand{\subtitle}[1]{\renewcommand{\@subtitle}{#1}}
+\newcommand{\subtitlefont}{\bfseries\color{pkcolor}\fontsize{16}{18}\sffamily\selectfont}
+
+\def\@maketitle{
+	\begingroup
+		{\raggedright\titlefont\@title\par\vskip8pt}
+		{\raggedright\subtitlefont\@subtitle\par\vskip8pt}
+		{\normalsize\sffamily\raggedright\@author\hfill{Version\,: \Version}\par}
+		{\raggedright\sffamily\selectfont\@date\par\vskip18pt}
+	\endgroup
+}
+\makeatother
+
+% redefine section
+\setcounter{secnumdepth}{5}
+
+\titleformat{\section}[hang]
+	{\color{pkcolor}\sffamily\large\bfseries}
+	{\thesection.}
+	{0.5em}
+	{\uppercase}
+
+\titleformat{name=\section,numberless}[hang]
+	{\color{pkcolor}\sffamily\large\bfseries}
+	{}
+	{0em}
+	{\tikz\draw[pkcolor, fill=pkcolor] (0,0) rectangle (1.25ex, 1.25ex); \hspace{2.5pt}\uppercase}
+
+\titleformat{\subsection}[hang]
+	{\color{pkcolor}\sffamily\bfseries}
+	{\thesubsection.}
+	{0.5em}
+	{}     
+
+\titleformat{\subsubsection}[block] % You may change it to "runin"
+	{\color{pkcolor}\small\sffamily\bfseries\itshape}
+	{\thesubsubsection.}
+	{0.5em}
+	{} % If using runin, change #1 to '#1. ' (space at the end)    
+
+\titleformat{\paragraph}[runin]
+	{\small\bfseries}
+	{}
+	{0em}
+	{} 
+
+
+% citation
+
+% mise en exergue sympa
+\usepackage{awesomebox}
+\usepackage[most]{tcolorbox}
+\usepackage{varwidth}
+\tcbuselibrary{most}
+\newtcolorbox{mybox}[2][]{enhanced,
+	before skip=2mm,after skip=2mm,
+	colback=black!5,colframe=black!50,boxrule=0.2mm,
+	attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
+	varwidth boxed title*=-3cm,
+	boxed title style={frame code={
+			\path[fill=tcbcolback!30!black]
+			([yshift=-1mm,xshift=-1mm]frame.north west)
+			arc[start angle=0,end angle=180,radius=1mm]
+			([yshift=-1mm,xshift=1mm]frame.north east)
+			arc[start angle=180,end angle=0,radius=1mm];
+			\path[left color=tcbcolback!60!black,right color=tcbcolback!60!black,
+			middle color=tcbcolback!80!black]
+			([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+			[rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+			-- (frame.south east) -- (frame.south west)
+			-- ([xshift=-1mm,yshift=-1mm]frame.north west)
+			[sharp corners]-- cycle;
+		},interior engine=empty,
+	},
+	fonttitle=\bfseries,
+	title={#2},#1}
+
+% symboles
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage[dvipsnames]{xcolor}
+\newcommand{\vrai}[1][black]{\textcolor{#1}{\ding{51}}}
+\newcommand{\faux}[1][black]{\textcolor{#1}{\ding{55}}}
+\newcommand{\vraiV}{\vrai[OliveGreen]}%
+\newcommand{\fauxR}{\faux[red]}%
+% figure
+
+\usepackage[section]{placeins}
+\usepackage{caption, subcaption}
+% same as tabular environment
+\captionsetup[table]{
+	position=top,           % ← c'est la ligne importante
+%	skip=10pt,              % espace entre le caption et le tableau
+%	labelfont=bf,           % label en gras (Table 1)
+	textfont=normal         % texte du caption en normal
+}
+
+\usepackage{floatrow}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\graphicspath{ {./figures/} }
+
+
+% biblio
+\usepackage{csquotes}
+\usepackage[
+backend=biber,
+%style=phys,
+sorting=ynt,
+citestyle=numeric-comp,
+]{biblatex}
+
+\addbibresource{plenodynamique-quantique.bib}
+
+% Nœud
+\newtcbox{\vnode}{%
+	boxrule=0.4pt,          
+	arc=1pt,                
+	colback=gray!15,        
+	colframe=gray!60,        
+	coltext=pkcolor,         
+	left=1pt, right=1pt,    
+	top=1pt, bottom=1pt,      
+	boxsep=0pt,             
+	fontupper=\ttfamily\small,
+	valign=center,
+	nobeforeafter,
+	box align=base
+}
+\newtcbox{\node}{%
+	boxrule=0.4pt,          
+	arc=1pt,                
+	colback=blue!15,        
+	colframe=blue!60,        
+	coltext=black,         
+	left=1pt, right=1pt,    
+	top=1pt, bottom=1pt,      
+	boxsep=0pt,             
+	fontupper=\ttfamily\small,
+	valign=center,
+	nobeforeafter,
+	box align=base
+}
+
+%\newcommand{\vvnode}[2]{\vnode{$\rotatebox{180}{S}_#1}{#2}}$}
+
+% Lists
+
+\usepackage{enumitem}
+
+\newcommand{\squarebullet}[1][pkcolor]{%
+	\tikz[baseline=0.0ex]{
+		\fill[#1] (0,0) rectangle (1.1ex,1.1ex);
+	}%
+}
+
+\setlist[itemize]{
+	%label=\textbullet,        % puce classique
+	 label=\squarebullet[pkcolor],   % exemple de puce colorée
+}
