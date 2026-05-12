@@ -1,2 +1,4 @@
 # plenodynamique-quantique
-Physique du tout.
+Physique du tout (théorie du tout)
+
+Compilation : Lualatex + biber
