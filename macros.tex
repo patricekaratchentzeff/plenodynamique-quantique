@@ -53,8 +53,20 @@
 
 
 % shortcuts
-\newcommand{\PQ}{plénodynamique quantique}
-\newcommand{\MQ}{mécanique quantique}
+\newcommand{\PQ}{
+	\iflanguage{french}{%
+		plénodynamique quantique%
+	}{%
+		Quantum plenodynamics%   % version par défaut (anglais)
+	}%
+}
+\newcommand{\MQ}{
+	\iflanguage{french}{%
+		mécanique quantique%
+	}{%
+		Quantum mechanics%   % version par défaut (anglais)
+	}
+}%
 \usepackage{xfrac}
 %\usepackage{units}
 % belles fractions
